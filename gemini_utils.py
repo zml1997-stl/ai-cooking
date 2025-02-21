@@ -45,7 +45,7 @@ def generate_recipe(preferences, dietary_restrictions, servings, additional_info
         ]
     }}
     """
-    model = genai.GenerativeModel('models/gemini-2.0-flash')
+    model = genai.GenerativeModel('models/gemini-flash-2.0')
     response = model.generate_content(prompt)
     try:
         response_text = response.text
@@ -82,7 +82,7 @@ def generate_recipes_from_ingredients(ingredients, preferences="", dietary_restr
         "estimated_time": "Total preparation and cooking time"
     }}
     """
-    model = genai.GenerativeModel('models/gemini-2.0-flash')
+    model = genai.GenerativeModel('models/gemini-flash-2.0')
     response = model.generate_content(prompt)
     try:
         response_text = response.text
