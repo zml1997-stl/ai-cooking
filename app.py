@@ -246,4 +246,4 @@ def main():
                         display_recipe(recipe_data)
 
 if __name__ == "__main__":
-    main()​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
+    main()
