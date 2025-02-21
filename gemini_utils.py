@@ -30,13 +30,11 @@ def generate_recipe(preferences, dietary_restrictions, servings, additional_info
         "servings": {servings},
         "ingredients": [
             "Ingredient 1 with quantity",
-            "Ingredient 2 with quantity",
-            ...
+            "Ingredient 2 with quantity"
         ],
         "instructions": [
             "Step 1",
-            "Step 2",
-            ...
+            "Step 2"
         ],
         "nutrition_info": {{
             "calories": "per serving",
@@ -54,11 +52,9 @@ def generate_recipe(preferences, dietary_restrictions, servings, additional_info
     response = model.generate_content(prompt)
     
     try:
-        # Extract JSON from response
         response_text = response.text
         json_str = response_text
         
-        # If the response includes markdown code blocks, extract just the JSON
         if "```json" in response_text:
             json_str = response_text.split("```json")[1].split("```")[0].strip()
         elif "```" in response_text:
@@ -98,14 +94,12 @@ def generate_recipes_from_ingredients(ingredients, preferences="", dietary_restr
     """
     
     model = genai.GenerativeModel('models/gemini-2.0-flash')
-    response = model.generate_content(prompt)  # Fixed: indented under the function
+    response = model.generate_content(prompt)
     
     try:
-        # Extract JSON from response
         response_text = response.text
         json_str = response_text
         
-        # If the response includes markdown code blocks, extract just the JSON
         if "```json" in response_text:
             json_str = response_text.split("```json")[1].split("```")[0].strip()
         elif "```" in response_text:
@@ -117,13 +111,10 @@ def generate_recipes_from_ingredients(ingredients, preferences="", dietary_restr
         print(f"Error parsing Gemini response: {e}")
         return {"error": "Failed to generate recipe ideas. Please try again."}
 
-# Test the functions
 if __name__ == "__main__":
-    # Test generate_recipe
     recipe = generate_recipe("spicy Italian", ["vegetarian"], 4, "use fresh herbs")
     print(json.dumps(recipe, indent=2))
-
-    # Test generate_recipes_from_ingredients
+    
     ingredients = ["tomatoes", "pasta", "olive oil"]
     recipes = generate_recipes_from_ingredients(ingredients, "savory", ["gluten-free"], 2)
     print(json.dumps(recipes, indent=2))
