@@ -118,4 +118,3 @@ if __name__ == "__main__":
     ingredients = ["tomatoes", "pasta", "olive oil"]
     recipes = generate_recipes_from_ingredients(ingredients, "savory", ["gluten-free"], 2)
     print(json.dumps(recipes, indent=2))
-​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
