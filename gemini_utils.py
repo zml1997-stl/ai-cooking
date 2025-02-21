@@ -98,7 +98,7 @@ def generate_recipes_from_ingredients(ingredients, preferences="", dietary_restr
     """
     
     model = genai.GenerativeModel('models/gemini-2.0-flash')
-response = model.generate_content(prompt)
+    response = model.generate_content(prompt)  # Fixed: indented under the function
     
     try:
         # Extract JSON from response
@@ -116,3 +116,15 @@ response = model.generate_content(prompt)
     except Exception as e:
         print(f"Error parsing Gemini response: {e}")
         return {"error": "Failed to generate recipe ideas. Please try again."}
+
+# Test the functions
+if __name__ == "__main__":
+    # Test generate_recipe
+    recipe = generate_recipe("spicy Italian", ["vegetarian"], 4, "use fresh herbs")
+    print(json.dumps(recipe, indent=2))
+
+    # Test generate_recipes_from_ingredients
+    ingredients = ["tomatoes", "pasta", "olive oil"]
+    recipes = generate_recipes_from_ingredients(ingredients, "savory", ["gluten-free"], 2)
+    print(json.dumps(recipes, indent=2))
+​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
