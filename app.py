@@ -2,7 +2,6 @@ import streamlit as st
 import os
 from dotenv import load_dotenv
 import gemini_utils
-import database
 import auth
 import json
 import pandas as pd
@@ -111,7 +110,7 @@ def display_recipe_ideas(recipe_ideas):
                         servings=st.session_state.get('servings', 2)
                     )
                     # Save to user history
-                    database.save_recipe(
+                    auth.save_recipe(
                         st.session_state['username'],
                         f"Full recipe for {recipe['title']}",
                         full_recipe
@@ -168,7 +167,7 @@ def main():
                         )
                         
                         # Save to user history
-                        database.save_recipe(
+                        auth.save_recipe(
                             st.session_state['username'],
                             preferences,
                             recipe_data
@@ -231,7 +230,7 @@ def main():
             st.title("Your Recipe History")
             
             # Get user recipes
-            user_recipes = database.get_user_recipes(st.session_state['username'])
+            user_recipes = auth.get_user_recipes(st.session_state['username'])
             
             if not user_recipes:
                 st.info("You haven't generated any recipes yet. Try generating a new recipe!")
@@ -239,7 +238,13 @@ def main():
                 for idx, recipe_entry in enumerate(user_recipes):
                     recipe_data = recipe_entry['recipe_data']
                     prompt = recipe_entry['prompt']
-                    created_at = recipe_entry['created_at'].strftime("%Y-%m-%d %H:%M")
+                    
+                    # Convert ISO format string to readable date if possible
+                    try:
+                        from datetime import datetime
+                        created_at = datetime.fromisoformat(recipe_entry['created_at']).strftime("%Y-%m-%d %H:%M")
+                    except:
+                        created_at = recipe_entry.get('created_at', 'Unknown date')
                     
                     with st.expander(f"{recipe_data['title']} - {created_at}"):
                         st.markdown(f"**Original Request:** {prompt}")
