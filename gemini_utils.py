@@ -97,7 +97,7 @@ def generate_recipes_from_ingredients(ingredients, preferences="", dietary_restr
     }}
     """
     
-    model = genai.GenerativeModel('gemini-flash-2.0')
+    model = genai.GenerativeModel('gemini-2.0-flash')
     response = model.generate_content(prompt)
     
     try:
